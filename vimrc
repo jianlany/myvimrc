@@ -145,6 +145,8 @@ let mapleader = " "
 
 let g:ycm_global_ycm_extra_conf = '/home/jianlan/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_log_level = 'debug'
 
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
