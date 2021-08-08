@@ -90,10 +90,6 @@ set smartcase
 " Store info from no more than 100 files at a time, 9999 lines of text, 100kb of data. Useful for copying large amounts of data between files.
 set viminfo='100,<9999,s100
 
-" Map the <Space> key to toggle a selected fold opened/closed.
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
-
 " Automatically save and load folds
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview"
@@ -103,14 +99,7 @@ nnoremap d "_d
 vnoremap d "_d
 
 " paste without copying
-vnoremap p "_dhp
-
-" xnoremap <expr> *  {'v'      : "\"\<esc>:echo 'executed from a characterwise selection'\<cr>",
-"              \      'V'      : "\<esc>:echo 'executed from a linewise selection'\<cr>",
-"              \      "\<c-v>" : "\<esc>:echo 'executed from a blockwise selection'\<cr>",
-"              \      }[mode()]
-
-
+vnoremap p "_dP
 
 if has('persistent_undo')      "check if your vim version supports it
   set undofile                 "turn on the feature  
@@ -130,7 +119,7 @@ Plug 'vim-python/python-syntax'
 Plug 'jremmen/vim-ripgrep'
 Plug 'vim-utils/vim-man'
 Plug 'kien/ctrlp.vim'
-Plug 'ycm-core/YouCompleteMe'
+" Plug 'ycm-core/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'mbbill/undotree'
 
@@ -143,10 +132,10 @@ set background=dark
 let g:python_highlight_all = 1
 let mapleader = " "
 
+" let g:ycm_server_keep_logfiles = 1
+" let g:ycm_server_log_level = 'debug'
 let g:ycm_global_ycm_extra_conf = '/home/jianlan/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_server_keep_logfiles = 1
-let g:ycm_server_log_level = 'debug'
 
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
@@ -159,6 +148,9 @@ nnoremap <Leader>k :wincmd k<CR>
 nnoremap <Leader>j :wincmd j<CR>
 nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>l :wincmd l<CR>
+" Use F9 to save and run current file
+nnoremap <F9> :!%:p<Enter>
+
 
 " goto definition
 nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
