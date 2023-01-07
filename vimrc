@@ -16,6 +16,8 @@ set modelines=0
 
 " Automatically wrap text that extends beyond the screen length.
 set wrap
+" If on Vim will wrap long lines at a character in 'breakat' rather than at the last character that fits on the screen.
+set linebreak
 " Vim's auto indentation feature does not work properly with text copied from outisde of Vim. Press the <F2> key to toggle paste mode on/off.
 nnoremap <F2> :set invpaste paste?<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
@@ -102,28 +104,36 @@ vnoremap d "_d
 vnoremap p "_dP
 
 if has('persistent_undo')      "check if your vim version supports it
+  if !isdirectory($HOME . "/.vim/undo")
+      call mkdir($HOME . "/.vim/undo", "p", 0700)
+  endif
   set undofile                 "turn on the feature  
   set undodir=~/.vim/undo  "directory where the undo files will be stored
-  endif
+endif
 
 
 call plug#begin('~/.vim/plugged')
 " colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'ErichDonGubler/vim-sublime-monokai'
-Plug 'crusoexia/vim-monokai'
+" Plug 'ErichDonGubler/vim-sublime-monokai'
+" Plug 'crusoexia/vim-monokai'
 
 " syntax files
-Plug 'vim-python/python-syntax'
+" Plug 'vim-python/python-syntax'
 
 Plug 'jremmen/vim-ripgrep'
 Plug 'vim-utils/vim-man'
 Plug 'kien/ctrlp.vim'
-" Plug 'ycm-core/YouCompleteMe'
+Plug 'ycm-core/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'mbbill/undotree'
 
 call plug#end()
+
+augroup my_colors
+  autocmd!
+  autocmd ColorScheme gruvbox hi SpellBad cterm=reverse
+augroup END
 
 colorscheme gruvbox
 set background=dark
@@ -134,8 +144,8 @@ let mapleader = " "
 
 " let g:ycm_server_keep_logfiles = 1
 " let g:ycm_server_log_level = 'debug'
-let g:ycm_global_ycm_extra_conf = '/home/jianlan/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 0
+" let g:ycm_global_ycm_extra_conf = '/home/jianlan/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+" let g:ycm_confirm_extra_conf = 0
 
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
@@ -149,8 +159,9 @@ nnoremap <Leader>j :wincmd j<CR>
 nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>l :wincmd l<CR>
 " Use F9 to save and run current file
-nnoremap <F9> :!%:p<Enter>
+nnoremap <F9> :w<Enter>:!%:p<Enter>
+nnoremap <F8> :w<Enter>:make<Enter>
 
 
-" goto definition
+"YCM  goto definition
 nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
