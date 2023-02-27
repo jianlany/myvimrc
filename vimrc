@@ -102,6 +102,9 @@ vnoremap d "_d
 
 " paste without copying
 vnoremap p "_dP
+" Use // to search selected texts
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 
 if has('persistent_undo')      "check if your vim version supports it
   if !isdirectory($HOME . "/.vim/undo")
